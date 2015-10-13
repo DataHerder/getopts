@@ -27,7 +27,7 @@ args = Go.define_options({'m:', 'marketing=', 's:': 'sales='})
 # would raise the run time error "Marketing is required"
 ```
 
-Since I use this all the time, I needed to standardize it.  This works for me.
+Since I use the module "getopt" all the time, I needed to standardize it.  This works for me.
 
 It returns an object associated with the arguments' long version ie: --sales "hi" will return the same result as -s "hi" as an object {"sales": "hi"}
 
