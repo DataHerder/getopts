@@ -5,12 +5,16 @@
 
 ```python
 from GetOpts import GetOpts
-Go = GetOpts()
-args = Go.define_options({'m:': 'marketing=', 's:': 'sales=', 'c': 'count'})
+args = GetOpts.options({'m:': 'marketing=', 's:': 'sales=', 'c': 'count-only'})
+
 # if arguments were: -m hi -s sales
 # args would be {'marketing': 'hi', 'sales': 'hi there', 'count': False}
 # if arguments where: -m hi -c
 # args would be {'marketing': 'hi', 'sales': None, 'count': True}
+
+# or as a class object
+Go = GetOpts()
+args = Go.define_options({'m:': 'marketing=', 's:': 'sales=', 'c': 'count'})
 
 # you can define success and error callbacks
 def success(options):
@@ -20,6 +24,10 @@ def success(options):
 def error(options):
   raise RuntimeError('Arguments are required')
 
+options = {'m:': 'marketing=', 's:': 'sales=', 'c': 'count'}
+GetOpt.options(options, success, error)
+
+# or alternatively
 Go = GetOpts(success, error)
 args = Go.define_options({'m:', 'marketing=', 's:': 'sales='})
 
