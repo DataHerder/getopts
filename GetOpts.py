@@ -21,7 +21,8 @@ class GetOpts(object):
 
         pass
 
-    def define_options(self, options={}):
+    @staticmethod
+    def __get_options(options={}, success_callback=None, error_callback=None):
         str_vals = ''
         str_lits = []
         key_list = []
@@ -33,7 +34,7 @@ class GetOpts(object):
         opts, args = getopt.getopt(sys.argv[1:], str_vals, str_lits)
 
         if len(opts) == 0:
-            self.error_callback()
+            error_callback([opts, args])
 
         key_val_list = {}
         for opt, arg in opts:
@@ -52,5 +53,25 @@ class GetOpts(object):
                 else:
                     key_val_list[key[2]] = None
 
-        return self.success_callback(key_val_list)
+        return success_callback(key_val_list)
 
+
+    def define_options(self, options={}):
+        return self.__get_options(
+            options=options,
+            success_callback=self.success_callback,
+            error_callback=self.error_callback
+        )
+
+    @classmethod
+    def options(cls, options={}, success_callback=None, error_callback=None):
+        if error_callback is None:
+            error_callback = lambda x: x
+        if success_callback is None:
+            success_callback = lambda x: x
+
+        return cls.__get_options(
+            options=options,
+            success_callback=success_callback,
+            error_callback=error_callback
+        )
