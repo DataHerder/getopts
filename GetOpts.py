@@ -31,6 +31,13 @@ class GetOpts(object):
             str_lits.append(string_val)
             key_list.append([key.replace(':', ''), string_val, string_val.replace('=', ''), key])
 
+
+        if '?' in sys.argv:
+            pp('Allowed types: ')
+            for j in key_list:
+                pp('-' + j[0] + ' = ' + '--' + j[2])
+            exit()
+
         opts, args = getopt.getopt(sys.argv[1:], str_vals, str_lits)
 
         if len(opts) == 0:
